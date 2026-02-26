@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import TextField from "./TextField";
-import userEvent from "@testing-library/user-event";
+
+import render from "@/test/setup";
 
 describe("TextField의 props에 대한 검증 - className, placeholder, onChange,onFocus, borderonFocus", () => {
   it("className prop으로 설정한 css class가 적용된다.", () => {
@@ -21,8 +22,7 @@ describe("TextField의 props에 대한 검증 - className, placeholder, onChange
 
   it("텍스트를 입력하면 onChange prop으로 등록한 함수가 호출된다.", async () => {
     const spy = vi.fn();
-    const user = userEvent.setup();
-    render(<TextField onChange={spy} />);
+    const { user } = render(<TextField onChange={spy} />);
     const input = screen.getByPlaceholderText("텍스트를 입력해 주세요.");
     await user.type(input, "test");
     expect(spy).toHaveBeenCalledWith("test");
@@ -30,8 +30,7 @@ describe("TextField의 props에 대한 검증 - className, placeholder, onChange
 
   it("엔텈티를 입력하면 onEnter prop으로 등록한 함수가 호출된다.", async () => {
     const spy = vi.fn();
-    const user = userEvent.setup();
-    render(<TextField onEnter={spy} />);
+    const { user } = render(<TextField onEnter={spy} />);
     const input = screen.getByPlaceholderText("텍스트를 입력해 주세요.");
     await user.type(input, "test{Enter}");
     expect(spy).toHaveBeenCalledWith("test");
@@ -39,16 +38,14 @@ describe("TextField의 props에 대한 검증 - className, placeholder, onChange
 
   it("포커스가 활성화 되면 onFocus prop으로 등록한 함수가 호출된다.", async () => {
     const spy = vi.fn();
-    const user = userEvent;
-    render(<TextField onFocus={spy} />);
+    const { user } = render(<TextField onFocus={spy} />);
     const input = screen.getByPlaceholderText("텍스트를 입력해 주세요.");
     await user.click(input);
     expect(spy).toHaveBeenCalled();
   });
 
   it("포커스가 활성화되면 border class 스타일이 추가된다.", async () => {
-    const user = userEvent;
-    render(<TextField />);
+    const { user } = render(<TextField />);
 
     const input = screen.getByPlaceholderText("텍스트를 입력해 주세요.");
     await user.click(input);
