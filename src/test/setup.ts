@@ -1,11 +1,16 @@
 import "@testing-library/jest-dom/vitest";
 import type { ReactNode } from "react";
-import { afterEach } from "vitest";
+import { afterAll, afterEach, vi } from "vitest";
 import { cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 afterEach(() => {
   cleanup();
+  vi.clearAllMocks();
+});
+
+afterAll(() => {
+  vi.resetAllMocks();
 });
 
 const customRender = (component: ReactNode) => {
