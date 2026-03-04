@@ -1,0 +1,6 @@
+{
+  "couponList": [
+    { "id": 1, "name": "5% 할인", "type": "percent", "value": 5 },
+    { "id": 2, "name": "10달러 할인", "type": "price", "value": 10 }
+  ]
+}
