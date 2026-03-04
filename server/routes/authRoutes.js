@@ -20,16 +20,20 @@ export const registerAuthRoutes = (app) => {
     // access_token 쿠키는 httpOnly로 설정해 JS 접근을 차단한다.
     res.cookie('access_token', accessToken, {
       httpOnly: true,
+      sameSite: 'lax',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    return res.send({ ...user, access_token: accessToken });
+    const safeUser = { id: user.id, name: user.name, email: user.email };
+
+    return res.send(safeUser);
   });
 
-  // 유저 조회: Authorization 토큰 복호화 후 user.id로 사용자 검색
-  // 강의 기준: 누락/변조/미존재 모두 404 + "not found"
+  // 강의: Authorization 헤더 토큰 기반으로 사용자 조회
+  // 내 프로젝트: httpOnly 쿠키(access_token) 기반으로 사용자 조회
+  // 강의 기준 유지: 누락/변조/미존재 모두 404 + "not found"
   app.get('/user', (req, res) => {
-    const accessToken = req.headers.authorization;
+    const accessToken = req.cookies?.access_token;
 
     if (!accessToken || typeof accessToken !== 'string') {
       return res.status(404).send('not found');
@@ -43,7 +47,9 @@ export const registerAuthRoutes = (app) => {
         return res.status(404).send('not found');
       }
 
-      return res.send(user);
+      const safeUser = { id: user.id, name: user.name, email: user.email };
+
+      return res.send(safeUser);
     } catch (error) {
       return res.status(404).send('not found');
     }
