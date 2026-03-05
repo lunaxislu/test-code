@@ -34,6 +34,11 @@ const ProductDetailPage = () => {
   };
 
   const validateQuantity = () => {
+    if (!Number.isInteger(quantity) || quantity < 0) {
+      toast.error("올바른 수량을 입력해 주세요.");
+      return false;
+    }
+
     if (quantity < MIN_PRODUCT_COUNT) {
       toast.error("수량은 1개 이상이어야 합니다.");
       return false;
@@ -48,6 +53,10 @@ const ProductDetailPage = () => {
   };
 
   const handleChangeQuantity = (nextQuantity: number) => {
+    if (!Number.isInteger(nextQuantity) || nextQuantity < 0) {
+      return;
+    }
+
     if (nextQuantity > MAX_PRODUCT_COUNT) {
       toast.error("수량은 999개를 초과할 수 없습니다.");
       return;
