@@ -3,6 +3,11 @@ import { decrypt, encrypt } from '../services/tokenService.js';
 
 // 인증(로그인/프로필 조회) 라우트 등록
 export const registerAuthRoutes = (app) => {
+  // 로그인 페이지의 "사용 가능한 유저 리스트" 조회
+  app.get('/users', (_, res) => {
+    return res.send(usersJSON.users);
+  });
+
   // 로그인: 계정 검증 -> access_token 발급 -> 쿠키/응답 반환
   app.post('/login', (req, res) => {
     const { email, password } = req.body;
