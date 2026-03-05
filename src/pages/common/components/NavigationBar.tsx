@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { pageRoutes } from "@/shared/config/routes";
+import { useCartStore } from "@/store/cart-store";
 import { useUserStore } from "@/store/user-store";
 
 const NavigationBar = () => {
@@ -23,6 +24,7 @@ const NavigationBar = () => {
   const [isLogoutModalOpened, setIsLogoutModalOpened] = useState(false);
   const isLogin = useUserStore((store) => store.isLogin);
   const user = useUserStore((store) => store.user);
+  const totalCount = useCartStore((store) => store.totalCount);
   const setIsLogin = useUserStore((store) => store.setIsLogin);
   const setUser = useUserStore((store) => store.setUser);
 
@@ -71,7 +73,7 @@ const NavigationBar = () => {
                 >
                   <ShoppingCart className="size-4" />
                   <Badge className="absolute -top-2 -right-2 min-w-5 px-1 text-[10px]">
-                    0
+                    {totalCount}
                   </Badge>
                 </Button>
                 <Button
