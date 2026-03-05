@@ -12,3 +12,4 @@ const readJson = (name) =>
 // 내 프로젝트: 데이터 접근 책임을 repository로 분리
 export const productsJSON = readJson('products.json');
 export const usersJSON = readJson('users.json');
+export const categoriesJSON = readJson('categories.json');

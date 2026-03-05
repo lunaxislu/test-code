@@ -1,5 +1,13 @@
+import ProductFilter from "@/pages/home/components/ProductFilter";
+import ProductList from "@/pages/home/components/ProductList";
+
 const HomePage = () => {
-  return <div>Home Page</div>;
+  return (
+    <section className="space-y-4">
+      <ProductFilter />
+      <ProductList />
+    </section>
+  );
 };
 
 export default HomePage;

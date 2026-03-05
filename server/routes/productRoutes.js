@@ -1,4 +1,4 @@
-import { productsJSON } from '../repositories/responseRepository.js';
+import { categoriesJSON, productsJSON } from '../repositories/responseRepository.js';
 import { getFilteredProductsByQuery, getSliceIndex } from '../services/productService.js';
 
 // 상품 목록/상세 라우트 등록
@@ -23,5 +23,11 @@ export const registerProductRoutes = (app) => {
     }
 
     return res.send(product);
+  });
+
+  // 강의: /categories는 categories.json 원본 형태로 반환
+  // 내 프로젝트: 라우트 분리 구조는 유지하고 응답 계약은 강의와 동일하게 맞춤
+  app.get('/categories', (_, res) => {
+    res.send(categoriesJSON);
   });
 };
