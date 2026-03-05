@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/pages/home/components/ProductList/ProductCard";
@@ -14,12 +15,14 @@ import { useUserStore } from "@/store/user-store";
 const ProductList = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const filter = useFilterStore((state) => ({
-    title: state.title,
-    categoryId: state.categoryId,
-    minPrice: state.minPrice,
-    maxPrice: state.maxPrice,
-  }));
+  const title = useFilterStore((state) => state.title);
+  const categoryId = useFilterStore((state) => state.categoryId);
+  const minPrice = useFilterStore((state) => state.minPrice);
+  const maxPrice = useFilterStore((state) => state.maxPrice);
+  const filter = useMemo(
+    () => ({ title, categoryId, minPrice, maxPrice }),
+    [title, categoryId, minPrice, maxPrice],
+  );
   const add = useCartStore((state) => state.add);
   const isLogin = useUserStore((state) => state.isLogin);
   const { products, isPending, hasNextPage, fetchNextPage, isFetchingNextPage } =

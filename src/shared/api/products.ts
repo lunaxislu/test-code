@@ -1,5 +1,9 @@
 import { http } from "@/shared/api/http";
-import type { Category, ProductsResponse } from "@/shared/types/product";
+import type {
+  Category,
+  ProductDetail,
+  ProductsResponse,
+} from "@/shared/types/product";
 
 type ProductListParams = {
   offset?: number;
@@ -19,6 +23,11 @@ export const getProducts = async (params: ProductListParams = {}) => {
   return response.data;
 };
 
+export const getProduct = async (productId: number) => {
+  const response = await http.get<ProductDetail>(`/products/${productId}`);
+  return response.data;
+};
+
 export const getCategories = async () => {
   // 강의: 카테고리 응답 형태를 단일 계약으로 가정
   // 내 프로젝트: 서버/목업 형태 차이를 흡수하기 위해 배열/객체 응답을 모두 허용
@@ -28,4 +37,3 @@ export const getCategories = async () => {
     ? response.data
     : response.data.categories;
 };
-

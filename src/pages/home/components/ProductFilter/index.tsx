@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CategoryRadioGroup from "@/pages/home/components/ProductFilter/CategoryRadioGroup";
 import PriceRange from "@/pages/home/components/ProductFilter/PriceRange";
@@ -16,47 +14,19 @@ const ProductFilter = () => {
   const setMinPrice = useFilterStore((state) => state.setMinPrice);
   const setMaxPrice = useFilterStore((state) => state.setMaxPrice);
 
-  const [localTitle, setLocalTitle] = useState(title);
-  const [localMinPrice, setLocalMinPrice] = useState(minPrice);
-  const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTitle(localTitle);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [localTitle, setTitle]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMinPrice(localMinPrice);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [localMinPrice, setMinPrice]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMaxPrice(localMaxPrice);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [localMaxPrice, setMaxPrice]);
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>상품 필터</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <SearchBar value={localTitle} onChange={setLocalTitle} />
+        <SearchBar value={title} onChange={setTitle} />
         <CategoryRadioGroup categoryId={categoryId} onChange={setCategoryId} />
         <PriceRange
-          minPrice={localMinPrice}
-          maxPrice={localMaxPrice}
-          onChangeMinPrice={setLocalMinPrice}
-          onChangeMaxPrice={setLocalMaxPrice}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          onChangeMinPrice={setMinPrice}
+          onChangeMaxPrice={setMaxPrice}
         />
       </CardContent>
     </Card>
