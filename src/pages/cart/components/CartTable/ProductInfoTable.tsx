@@ -22,6 +22,7 @@ type ProductInfoTableProps = {
 
 const ProductInfoTable = ({ items }: ProductInfoTableProps) => {
   const remove = useCartStore((state) => state.remove);
+
   const changeCount = useCartStore((state) => state.changeCount);
 
   const handleChangeCount = (productId: number) => (nextValue: string) => {
@@ -67,14 +68,18 @@ const ProductInfoTable = ({ items }: ProductInfoTableProps) => {
                 className="mx-auto h-16 w-16 rounded object-cover"
               />
             </TableCell>
-            <TableCell className="max-w-[280px] whitespace-normal">{item.title}</TableCell>
+            <TableCell className="max-w-[280px] whitespace-normal">
+              {item.title}
+            </TableCell>
             <TableCell>
               <div className="flex items-center gap-2">
                 <Input
                   type="number"
                   min={0}
                   value={item.count}
-                  onChange={(event) => handleChangeCount(item.id)(event.target.value)}
+                  onChange={(event) =>
+                    handleChangeCount(item.id)(event.target.value)
+                  }
                   className="w-20"
                 />
                 <span className="text-sm text-muted-foreground">개</span>
