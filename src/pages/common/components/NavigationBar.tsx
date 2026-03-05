@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import useProfile from "@/pages/common/hooks/useProfile";
 import { pageRoutes } from "@/shared/config/routes";
 import { useCartStore } from "@/store/cart-store";
 import { useUserStore } from "@/store/user-store";
@@ -23,10 +24,21 @@ const NavigationBar = () => {
   const navigate = useNavigate();
   const [isLogoutModalOpened, setIsLogoutModalOpened] = useState(false);
   const isLogin = useUserStore((store) => store.isLogin);
+
   const user = useUserStore((store) => store.user);
   const totalCount = useCartStore((store) => store.totalCount);
   const setIsLogin = useUserStore((store) => store.setIsLogin);
   const setUser = useUserStore((store) => store.setUser);
+  const { remove } = useProfile({
+    config: {
+      enabled: !!isLogin,
+      onSuccess: (profile) => {
+        // 강의: NavigationBar에서 isLogin 기준으로 profile을 조회하고 user store를 동기화
+        // 내 프로젝트: 동일 소유권 규칙으로 /user 응답을 user store에 반영
+        setUser(profile);
+      },
+    },
+  });
 
   const handleClickLogo = () => {
     navigate(pageRoutes.main);
@@ -41,6 +53,7 @@ const NavigationBar = () => {
   };
 
   const handleConfirmLogout = () => {
+    remove();
     setIsLogin(false);
     setUser(null);
     // 강의: js-cookie로 access_token 제거

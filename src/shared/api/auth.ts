@@ -2,11 +2,12 @@ import { http } from "@/shared/api/http";
 import type {
   AvailableUser,
   LoginCredentials,
+  LoginResponse,
   User,
 } from "@/shared/types/user";
 
 export const login = async (payload: LoginCredentials) => {
-  const response = await http.post<User>("/login", payload);
+  const response = await http.post<LoginResponse>("/login", payload);
   return response.data;
 };
 
