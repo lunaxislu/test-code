@@ -1,17 +1,25 @@
 import "@testing-library/jest-dom/vitest";
 import type { ReactNode } from "react";
-import { afterAll, afterEach, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, vi } from "vitest";
 import { cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, type MemoryRouterProps } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
-
+import { setupServer } from "msw/node";
+import { handler } from "@/mocks/handler";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const server = setupServer(...handler);
+beforeEach(() => {
+  server.listen();
+});
 afterEach(() => {
+  server.resetHandlers();
   cleanup();
   vi.clearAllMocks();
 });
 
 afterAll(() => {
+  server.close();
   vi.resetAllMocks();
 });
 
@@ -38,14 +46,25 @@ const customRender = (
   component: ReactNode,
   routerOptions?: MemoryRouterProps,
 ) => {
+  // https://tanstack.com/query/latest/docs/framework/react/guides/testing
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   const user = userEvent.setup();
   return {
     user,
     ...render(
-      <MemoryRouter {...routerOptions}>
-        {component}
-        <Toaster richColors position="top-center" />
-      </MemoryRouter>,
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter {...routerOptions}>
+          {component}
+          <Toaster richColors position="top-center" />
+        </MemoryRouter>
+        ,
+      </QueryClientProvider>,
     ),
   };
 };

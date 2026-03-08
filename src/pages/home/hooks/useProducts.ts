@@ -4,17 +4,12 @@ import { useMemo } from "react";
 import { getProducts } from "@/shared/api/products";
 import type { FilterState } from "@/shared/types/filter";
 
-const PRODUCT_PAGE_LIMIT = 20;
-
 type UseProductsOptions = {
   filter: FilterState;
-  limit?: number;
+  limit: number;
 };
 
-export const useProducts = ({
-  filter,
-  limit = PRODUCT_PAGE_LIMIT,
-}: UseProductsOptions) => {
+export const useProducts = ({ filter, limit }: UseProductsOptions) => {
   const query = useInfiniteQuery({
     queryKey: ["products", filter, limit],
     initialPageParam: 0,

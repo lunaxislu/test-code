@@ -11,8 +11,12 @@ import type { Product } from "@/shared/types/product";
 import { useCartStore } from "@/store/cart-store";
 import { useFilterStore } from "@/store/filter-store";
 import { useUserStore } from "@/store/user-store";
+const PRODUCT_PAGE_LIMIT = 20;
 
-const ProductList = () => {
+interface Props {
+  limit?: number;
+}
+const ProductList = ({ limit = PRODUCT_PAGE_LIMIT }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const title = useFilterStore((state) => state.title);
@@ -25,8 +29,13 @@ const ProductList = () => {
   );
   const add = useCartStore((state) => state.add);
   const isLogin = useUserStore((state) => state.isLogin);
-  const { products, isPending, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useProducts({ filter });
+  const {
+    products,
+    isPending,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useProducts({ filter, limit });
 
   const goLogin = () => {
     navigate(pageRoutes.login, {
@@ -35,7 +44,10 @@ const ProductList = () => {
   };
 
   const handleClickCard = (productId: number) => {
-    const nextPath = pageRoutes.productDetail.replace(":productId", String(productId));
+    const nextPath = pageRoutes.productDetail.replace(
+      ":productId",
+      String(productId),
+    );
     navigate(nextPath);
   };
 

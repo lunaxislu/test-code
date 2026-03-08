@@ -1,4 +1,10 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/shared/types/product";
 
@@ -20,15 +26,24 @@ const ProductCard = ({
   return (
     <Card
       role="button"
+      data-testid="product-card"
       onClick={() => onClickCard(product.id)}
       className="cursor-pointer gap-4 overflow-hidden py-0"
     >
-      <img src={image} alt={product.title} className="h-48 w-full object-cover" />
+      <img
+        src={image}
+        alt={product.title}
+        className="h-48 w-full object-cover"
+      />
       <CardHeader className="px-4">
-        <CardTitle className="line-clamp-1 text-base">{product.title}</CardTitle>
+        <CardTitle className="line-clamp-1 text-base">
+          {product.title}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-1 px-4 text-sm">
-        <p className="text-muted-foreground">카테고리: {product.category.name}</p>
+        <p className="text-muted-foreground">
+          카테고리: {product.category.name}
+        </p>
         <p className="font-semibold">${product.price}</p>
       </CardContent>
       <CardFooter className="flex gap-2 px-4 pb-4">
