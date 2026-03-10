@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   AlertDialog,
@@ -22,6 +22,7 @@ import { useUserStore } from "@/store/user-store";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLogoutModalOpened, setIsLogoutModalOpened] = useState(false);
   const isLogin = useUserStore((store) => store.isLogin);
 
@@ -45,7 +46,7 @@ const NavigationBar = () => {
   };
 
   const handleClickLogin = () => {
-    navigate(pageRoutes.login);
+    navigate(pageRoutes.login, { state: { prevPath: location.pathname } });
   };
 
   const handleClickCart = () => {

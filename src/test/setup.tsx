@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { setupServer } from "msw/node";
 import { handler } from "@/mocks/handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const server = setupServer(...handler);
+export const server = setupServer(...handler);
 beforeEach(() => {
   server.listen();
 });
