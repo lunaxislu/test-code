@@ -13,4 +13,6 @@ export const apiRoutes = {
   products: "/products",
   product: "/products/:productId",
   categories: "/categories",
+  couponList: "/couponList",
+  purchase: "/purchase",
 };

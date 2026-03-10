@@ -13,3 +13,4 @@ const readJson = (name) =>
 export const productsJSON = readJson('products.json');
 export const usersJSON = readJson('users.json');
 export const categoriesJSON = readJson('categories.json');
+export const couponListJSON = readJson('couponList.json');

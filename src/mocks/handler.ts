@@ -58,4 +58,16 @@ export const handler = [
       },
     );
   }),
+  http.get(`${API_DOMAIN}${apiRoutes.couponList}`, () => {
+    return HttpResponse.json(response[apiRoutes.couponList], { status: 200 });
+  }),
+  http.post(`${API_DOMAIN}${apiRoutes.purchase}`, async ({ request }) => {
+    const body = (await request.json()) as { name?: string };
+
+    if (body.name === "FAIL") {
+      return HttpResponse.json(null, { status: 500 });
+    }
+
+    return HttpResponse.json(null, { status: 200 });
+  }),
 ];
