@@ -9,6 +9,7 @@ import { useProduct } from "@/pages/product-detail/hooks/useProduct";
 import { pageRoutes } from "@/shared/config/routes";
 import { useCartStore } from "@/store/cart-store";
 import { useUserStore } from "@/store/user-store";
+import ProductInfoArea from "./components/ProductInfoArea";
 
 const MIN_PRODUCT_COUNT = 1;
 const MAX_PRODUCT_COUNT = 999;
@@ -22,8 +23,14 @@ const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(0);
 
   const parsedProductId = Number(productId);
-  const safeProductId = Number.isFinite(parsedProductId) ? parsedProductId : null;
-  const { data: product, isPending, isError } = useProduct({
+  const safeProductId = Number.isFinite(parsedProductId)
+    ? parsedProductId
+    : null;
+  const {
+    data: product,
+    isPending,
+    isError,
+  } = useProduct({
     productId: safeProductId,
   });
 
@@ -102,21 +109,24 @@ const ProductDetailPage = () => {
   };
 
   if (isPending) {
-    return <div className="text-sm text-muted-foreground">상품 정보를 불러오는 중...</div>;
+    return (
+      <div className="text-sm text-muted-foreground">
+        상품 정보를 불러오는 중...
+      </div>
+    );
   }
 
   if (isError || !product) {
-    return <div className="text-sm text-destructive">상품 정보를 찾을 수 없습니다.</div>;
+    return (
+      <div className="text-sm text-destructive">
+        상품 정보를 찾을 수 없습니다.
+      </div>
+    );
   }
 
   return (
     <section className="mx-auto w-full max-w-xl space-y-6 pt-2">
-      <ImageSwiper images={product.images} alt={product.title} />
-
-      <div className="space-y-2 text-center">
-        <h1 className="line-clamp-2 text-2xl font-semibold italic">{product.title}</h1>
-        <p className="text-xl font-semibold italic">${product.price.toLocaleString()}</p>
-      </div>
+      <ProductInfoArea product={product} />
 
       <QuantityInput value={quantity} onChange={handleChangeQuantity} />
       <ActionButtons

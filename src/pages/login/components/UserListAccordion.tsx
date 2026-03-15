@@ -20,7 +20,11 @@ type UserListAccordionProps = {
   isError: boolean;
 };
 
-const UserListAccordion = ({ users, isLoading, isError }: UserListAccordionProps) => {
+const UserListAccordion = ({
+  users,
+  isLoading,
+  isError,
+}: UserListAccordionProps) => {
   return (
     <Accordion type="single" collapsible defaultValue="available-users">
       <AccordionItem value="available-users">

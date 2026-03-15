@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const ErrorPage = () => {
@@ -8,10 +9,10 @@ const ErrorPage = () => {
   };
 
   return (
-    <div id="error-page">
+    <div>
       <h1>읔!</h1>
       <p>예상치 못한 에러가 발생했습니다.</p>
-      <button onClick={handleClickBackButton}>뒤로 이동</button>
+      <Button onClick={handleClickBackButton}>뒤로 이동</Button>
     </div>
   );
 };
