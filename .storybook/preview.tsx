@@ -4,16 +4,7 @@ import "../src/index.css";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import { handler } from "../src/mocks/handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            retry: false,
-            staleTime: 60 * 1000,
-            refetchOnWindowFocus: false,
-            refetchInterval: false,
-        },
-    },
-});
+
 initialize();
 const preview: Preview = {
     tags: ["autodocs"],
@@ -48,7 +39,7 @@ const preview: Preview = {
         // Storybook addon 은 parameters.msw.handlers 키를 읽음
         //https://github.com/mswjs/msw-storybook-addon/blob/main/MIGRATION.md
         msw: {
-            handlers: handler,
+            handlers: handler, // msw/handlers:handler 안해주면 데이터값에 따른 결과가 안나타남 -> vitest에서 const server = setupServer(...handler); 이거로 이해하자
         },
     },
     // 초기 값 전역적으로 설정
@@ -60,14 +51,17 @@ const preview: Preview = {
     },
 
     decorators: [
+        withRouter,
         (Story) => {
+            const queryClient = new QueryClient({
+                defaultOptions: {},
+            });
             return (
                 <QueryClientProvider client={queryClient}>
                     <Story />
                 </QueryClientProvider>
             );
         },
-        withRouter,
     ],
     loaders: [mswLoader],
 };
