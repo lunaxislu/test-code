@@ -29,3 +29,10 @@ storybook-static
 test-example-shopping-mall/
 
 .env
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
