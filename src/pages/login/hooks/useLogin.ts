@@ -48,13 +48,7 @@ export const useLogin = () => {
       const { access_token, user } = await requestLogin(values);
       // 강의(v6): 로그인 응답 access_token을 Cookies.set으로 직접 저장
       // 내 프로젝트(v7): 동일한 쿠키 소유권 정책으로 맞춰 강의 흐름 재현
-      // Cookies.set("test", "test");
-      // console.log(Cookies.get("test"), "<----");
-      // Cookies.set("access_token", access_token);
-      // // ⭐ 세 가지 모두 출력해주세요
-      // console.log("1. Cookies.get():", Cookies.get("access_token"));
-      // console.log("2. document.cookie:", document.cookie);
-      // console.log("3. access_token 값:", access_token); // 토큰이 정상인지 확인
+      Cookies.set("access_token", access_token);
       login(user);
 
       navigate(nextPath, { replace: true });

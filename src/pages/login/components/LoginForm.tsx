@@ -21,6 +21,8 @@ type LoginFormProps = {
 };
 
 const LoginForm = ({ form, isSubmitting, onSubmit }: LoginFormProps) => {
+    const values = form.watch();
+    const disabled = !(values.email || values.password);
     return (
         <Form {...form}>
             <form className="space-y-4" onSubmit={onSubmit}>
@@ -62,7 +64,7 @@ const LoginForm = ({ form, isSubmitting, onSubmit }: LoginFormProps) => {
                 <Button
                     type="submit"
                     className="w-full"
-                    disabled={isSubmitting}
+                    disabled={disabled || isSubmitting}
                 >
                     {isSubmitting ? "로그인 중..." : "로그인"}
                 </Button>
