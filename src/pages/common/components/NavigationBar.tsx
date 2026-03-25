@@ -85,7 +85,10 @@ const NavigationBar = () => {
                                     onClick={handleClickCart}
                                     aria-label="장바구니"
                                 >
-                                    <ShoppingCart className="size-4" />
+                                    <ShoppingCart
+                                        className="size-4"
+                                        data-testid="cart-icon"
+                                    />
                                     <Badge className="absolute -top-2 -right-2 min-w-5 px-1 text-[10px]">
                                         {totalCount}
                                     </Badge>
