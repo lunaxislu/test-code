@@ -43,7 +43,31 @@ export default defineConfig({
             use: { ...devices["Desktop Chrome"] },
             dependencies: ["setup"],
         },
-
+        // {
+        //     name: "logged-in",
+        //     testMatch: "private/**/*.test.ts",
+        //     use: {
+        //         ...devices["Desktop Chrome"],
+        //         storageState: "playwright/.auth/user.json",
+        //     },
+        //     dependencies: ["auth-setup"],
+        // },
+        // {
+        //     name: "logged-out",
+        //     testMatch: "public/**/*.test.ts",
+        //     use: {
+        //         ...devices["Desktop Chrome"],
+        //     },
+        // },
+        // {
+        //     name: "logged-in",
+        //     testMatch: "private/**/*.test.ts",
+        //     use: {
+        //         ...devices["Desktop Chrome"],
+        //         storageState: "playwright/.auth/user.json",
+        //     },
+        //     dependencies: ["auth-setup"],
+        // },
         // {
         //     name: "firefox",
         //     use: { ...devices["Desktop Firefox"] },
